@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_portrait"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:src="@drawable/p5"
+        android:layout_margin="5dp"
+        />
+    <LinearLayout
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+
+        >
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:id="@+id/tv_user_nickname"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="admin"
+                android:paddingLeft="5dp"
+                android:textSize="20sp"
+                android:lines="1"
+                android:textColor="#000000"
+                />
+            <TextView
+                android:id="@+id/tv_user_sendDate"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="10sp"
+                android:lines="1"
+                android:gravity="center|end"
+                android:textColor="#000000"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_user_chat_content"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="aaaaaaa"
+            android:paddingLeft="5dp"
+            android:textSize="15sp"
+            android:lines="1"
+            android:textColor="#8F8F8F"
+            />
+    </LinearLayout>
+</LinearLayout>

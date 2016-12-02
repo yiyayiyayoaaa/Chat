@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.microcardio.chat.activity.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#5CACEE"
+        android:gravity="start|top"
+
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          >
+
+          <de.hdodenhof.circleimageview.CircleImageView
+              android:layout_weight="1"
+              android:id="@+id/civ_myPortrait"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:src="@drawable/p4"
+              android:layout_margin="5dp"
+              />
+          <TextView
+              android:layout_weight="4"
+              android:id="@+id/tv_myNickname"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:textSize="20sp"
+              android:text="咿呀咿呀哟啊啊啊"
+              />
+          <ImageButton
+              android:layout_weight="1"
+              android:id="@+id/ib_config"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="end"
+              android:src="@drawable/config"
+              android:background="@null"
+              android:clickable="true"
+              android:padding="5dp"
+              android:scaleType="center"
+              />
+
+      </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+<!--    <LinearLayout
+        android:layout_weight="8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </LinearLayout>-->
+    <ListView
+        android:id="@+id/lv_userList"
+        android:layout_weight="9"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:divider="#ABABAB"
+        android:dividerHeight="1px"
+        android:background="#F5FFFA"
+        >
+
+    </ListView>
+
+</LinearLayout>

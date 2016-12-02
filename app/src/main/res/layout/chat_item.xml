@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+        <LinearLayout
+            android:id="@+id/ll_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            >
+                <LinearLayout
+                    android:id="@+id/ll_audio_right"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    >
+                        <TextView
+                            android:id="@+id/send_recorder_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="1'"
+                            android:layout_marginTop="20dp"
+                            android:textColor="#ff7777"
+                            />
+                        <FrameLayout
+                            android:id="@+id/send_recorder_length"
+                            android:layout_width="52dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/balloon_r"
+                            >
+                                <View android:id="@+id/send_recorder_anim"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_vertical|right"
+                                    android:background="@drawable/adj"
+                                    />
+                        </FrameLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_send_msg"
+                    android:layout_weight="5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/balloon_r"
+                    android:src="@drawable/pic_loading"
+                    android:visibility="gone"
+                    android:scaleType="fitCenter"
+                    android:maxHeight="100dp"
+                    android:maxWidth="100dp"
+                    />
+                <TextView
+                    android:layout_weight="5"
+                    android:id="@+id/tv_send_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/balloon_r"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_weight="1"
+                    android:id="@+id/iv_send_portrait"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/ic_launcher"
+                    />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="left"
+            >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_weight="1"
+                    android:id="@+id/iv_received_portrait"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/ic_launcher"
+
+                    />
+                <TextView
+                    android:layout_weight="5"
+                    android:id="@+id/tv_received_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="#000"
+                    android:background="@drawable/balloon_l_pressed"/>
+                <ImageView
+                    android:id="@+id/iv_received_msg"
+                    android:layout_weight="5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/balloon_l_pressed"
+                    android:visibility="gone"
+                    android:src="@drawable/pic_loading"
+                    android:scaleType="fitCenter"
+                    android:maxHeight="10dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/ll_audio_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="left"
+                    android:visibility="gone"
+                    >
+                        <FrameLayout
+                            android:id="@+id/receive_recorder_length"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/balloon_l_pressed"
+                            android:layout_margin="10dp"
+                            >
+                                <View android:id="@+id/receive_recorder_anim"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_vertical|left"
+                                    android:background="@drawable/jda"
+                                    />
+                        </FrameLayout>
+                        <TextView
+                            android:id="@+id/receive_recorder_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1'"
+                            android:layout_marginTop="20dp"
+                            android:textColor="#ff7777"
+                            />
+                </LinearLayout>
+        </LinearLayout>
+
+
+
+</LinearLayout>

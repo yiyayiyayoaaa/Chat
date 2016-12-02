@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.microcardio.chat.activity.RegisterActivity">
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_register_portrait"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:src="@drawable/p1"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text="点击头像进行选择"
+        android:gravity="center"
+        android:textColor="#6495ED"
+        />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView"
+            android:text="用  户  名:"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/et_register_username"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" 
+            android:hint="请输入用户名"
+            android:maxLength="12"
+            android:background="@android:drawable/editbox_background_normal"
+            />
+        <ImageView
+            android:id="@+id/iv_username_prompt"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="密       码:"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/et_register_password"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:background="@android:drawable/editbox_background_normal"
+             />
+
+        <ImageView
+            android:id="@+id/iv_password_prompt"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="确认密码:"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_register_confirm"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:hint="确认密码"
+            android:inputType="textPassword"
+            android:background="@android:drawable/editbox_background_normal"
+            />
+        <ImageView
+            android:id="@+id/iv_confirm_prompt"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="昵       称:"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_register_nickname"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:hint="请输入昵称"
+            android:maxLength="6"
+            android:background="@android:drawable/editbox_background_normal"
+            />
+
+        <ImageView
+            android:id="@+id/iv_nickname_prompt"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="register"
+        android:text="注册"
+        />
+    <TextView
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+</LinearLayout>
