@@ -33,6 +33,7 @@ import com.microcardio.chat.po.Message;
 import com.microcardio.chat.po.User;
 import com.microcardio.chat.service.SocketService;
 import com.microcardio.chat.util.DateUtil;
+import com.microcardio.chat.util.FileNameUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -227,8 +228,10 @@ public class MainActivity extends AppCompatActivity {
                     users.addAll(userList);
                     for(User user : users){
                         if(user.getUsername().equals(senderName) ||user.getUsername().equals(receivedName)){
-                            if(message.getContent().startsWith(Constants.FILE_PATH)){
+                            if(FileNameUtil.isImage(message.getContent())){
                                 user.setNewInfo("[图片]");
+                            }else if(FileNameUtil.isAudio(message.getContent())){
+                                user.setNewInfo("[语音]");
                             }else{
                                 user.setNewInfo(message.getContent());
                             }

@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import com.microcardio.chat.R;
 import com.microcardio.chat.activity.ViewPicActivity;
-import com.microcardio.chat.po.Constants;
 import com.microcardio.chat.po.Message;
 import com.microcardio.chat.util.BitMapUtil;
+import com.microcardio.chat.util.FileNameUtil;
 import com.microcardio.chat.util.MediaPlayerManager;
 
 import java.io.File;
@@ -115,12 +115,12 @@ public class MessageAdapter extends BaseAdapter {
             viewHolder.ll_right.setVisibility(View.VISIBLE);
             viewHolder.ll_left.setVisibility(View.GONE);
             viewHolder.iv_send_portrait.setImageResource(sendPortrait);
-            if(isImage(message.getContent())){//如果内容为图片
+            if(FileNameUtil.isImage(message.getContent())){//如果内容为图片
                 viewHolder.ll_audio_right.setVisibility(View.GONE);
                 viewHolder.tv_send_msg.setVisibility(View.GONE);
                 viewHolder.iv_send_msg.setVisibility(View.VISIBLE);
                 downAsynFile(message.getContent(), viewHolder.iv_send_msg);
-            }else if(isAudio(message.getContent())){//如果内容为语音
+            }else if(FileNameUtil.isAudio(message.getContent())){//如果内容为语音
                 String[] s  = message.getContent().split("\\?");
                 viewHolder.ll_audio_right.setVisibility(View.VISIBLE);
                 viewHolder.tv_send_msg.setVisibility(View.GONE);
@@ -140,11 +140,11 @@ public class MessageAdapter extends BaseAdapter {
             viewHolder.ll_left.setVisibility(View.VISIBLE);
             viewHolder.ll_right.setVisibility(View.GONE);
             viewHolder.iv_received_portrait.setImageResource(receivedPortrait);
-            if(isImage(message.getContent())){
+            if(FileNameUtil.isImage(message.getContent())){
                 viewHolder.tv_received_msg.setVisibility(View.GONE);
                 viewHolder.iv_received_msg.setVisibility(View.VISIBLE);
                 downAsynFile(message.getContent(),viewHolder.iv_received_msg);
-            }else if(isAudio(message.getContent())){
+            }else if(FileNameUtil.isAudio(message.getContent())){
                 String[] s  = message.getContent().split("\\?");
                 viewHolder.ll_audio_left.setVisibility(View.VISIBLE);
                 viewHolder.tv_received_msg.setVisibility(View.GONE);
@@ -165,25 +165,7 @@ public class MessageAdapter extends BaseAdapter {
         return view;
     }
 
-    private boolean isImage(String content){
-        if(content.startsWith(Constants.FILE_PATH) && !content.contains(".amr")){
-            return true;
-        }else {
-            return false;
-        }
-    }
 
-
-    private boolean isAudio(String content){
-        String regex = "(http://"+ Constants.SERVER_ADDRESS + ":8080/upload/)(.)+(\\.amr)(.)+";
-//        System.out.println("regex"+regex);
-//        System.out.println("regex"+content.matches(regex));
-        if(content.matches(regex)){
-            return true;
-        }else {
-            return false;
-        }
-    }
     class ViewHolder{
         TextView tv_send_msg;
         TextView tv_received_msg;
