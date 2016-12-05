@@ -141,6 +141,7 @@ public class MessageAdapter extends BaseAdapter {
             viewHolder.ll_right.setVisibility(View.GONE);
             viewHolder.iv_received_portrait.setImageResource(receivedPortrait);
             if(FileNameUtil.isImage(message.getContent())){
+                viewHolder.ll_audio_left.setVisibility(View.GONE);
                 viewHolder.tv_received_msg.setVisibility(View.GONE);
                 viewHolder.iv_received_msg.setVisibility(View.VISIBLE);
                 downAsynFile(message.getContent(),viewHolder.iv_received_msg);
