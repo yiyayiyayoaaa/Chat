@@ -19,10 +19,16 @@ public class ViewPicActivity extends AppCompatActivity {
             System.out.println("dsadsadadsaad"+getSupportActionBar().getHeight());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        String path = getIntent().getStringExtra("path");
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String path = getIntent().getStringExtra("path");
         iv_view_pic = (ImageView) findViewById(R.id.iv_view_pic);
-        iv_view_pic.setImageBitmap(BitMapUtil.viewImage(path,this));
+        iv_view_pic.setImageBitmap(BitMapUtil.viewImage(path,ViewPicActivity.this));
     }
 
     @Override

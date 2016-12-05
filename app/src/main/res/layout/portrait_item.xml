@@ -10,5 +10,6 @@
         android:layout_height="60dp"
         android:src="@drawable/p5"
         android:layout_gravity="center"
+        android:scaleType="fitCenter"
         />
 </LinearLayout>

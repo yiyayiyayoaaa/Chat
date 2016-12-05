@@ -10,6 +10,7 @@ import android.view.Display;
  */
 public class BitMapUtil {
     public  static Bitmap narrowImage(String path, Activity activity){
+
         BitmapFactory.Options opts = new BitmapFactory.Options();
         //只请求图片宽高，不解析图片像素
         opts.inJustDecodeBounds = true;
@@ -46,7 +47,10 @@ public class BitMapUtil {
     }
 
     public  static Bitmap viewImage(String path, Activity activity){
-
+        int actionbarHeight = 0;
+        if(activity.getActionBar() != null){
+            actionbarHeight = activity.getActionBar().getHeight();
+        }
         BitmapFactory.Options opts = new BitmapFactory.Options();
         //只请求图片宽高，不解析图片像素
         opts.inJustDecodeBounds = true;
@@ -64,7 +68,7 @@ public class BitMapUtil {
         //计算缩放比例
         int scale = 1;
         int scaleWidth = imageWidth /(screenWidth);
-        int scaleHeight = imageHeight / (screenHeight-300);
+        int scaleHeight = imageHeight / (screenHeight-actionbarHeight);
         System.out.println(screenHeight);
         //判断取哪个比例
         if(scaleWidth >= scaleHeight && scaleWidth > 1){
