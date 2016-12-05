@@ -112,6 +112,8 @@ public class EditMeActivity extends AppCompatActivity {
         et_edit_nickname.setText(nickname);
         civ_edit_portrait.setImageResource(portrait);
         setTitle("设置");
+        et_edit_nickname.setSelection(nickname.length());
+        et_edit_nickname.clearFocus();
     }
 
     //绑定socketService

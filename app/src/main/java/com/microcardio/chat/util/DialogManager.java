@@ -2,6 +2,7 @@ package com.microcardio.chat.util;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,7 +45,11 @@ public class DialogManager {
         mIcon = (ImageView) view.findViewById(R.id.recorder_dialog_icon);
         mVoice = (ImageView) view.findViewById(R.id.recorder_dialog_voice);
         mLable = (TextView) view.findViewById(R.id.recorder_dialog_label);
+        mVoice.setBackgroundResource(R.drawable.play_anim3);
+        AnimationDrawable animation = (AnimationDrawable) mVoice.getBackground();
+        animation.start();
         mDialog.show();
+
     }
 
 

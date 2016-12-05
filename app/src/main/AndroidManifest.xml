@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity" android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,10 +32,10 @@
 
         <activity
             android:name=".activity.ChatActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".activity.RegisterActivity" />
+            android:launchMode="singleTask"  android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".activity.RegisterActivity" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.PortraitActivity" />
-        <activity android:name=".activity.EditMeActivity" />
+        <activity android:name=".activity.EditMeActivity" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.FileListActivity" />
         <activity android:name=".activity.ViewPicActivity"></activity>
     </application>

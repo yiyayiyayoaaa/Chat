@@ -20,6 +20,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -197,6 +198,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ll_function.setVisibility(View.GONE);
                 ll_recorder.setVisibility(View.VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(et_send_content.getWindowToken(), 0);
             }
         });
 //        b_cancel_record.setOnClickListener(new View.OnClickListener() {

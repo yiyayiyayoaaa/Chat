@@ -43,13 +43,13 @@
               android:layout_weight="1"
               android:id="@+id/ib_config"
               android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_gravity="end"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end|center"
               android:src="@drawable/config"
               android:background="@null"
               android:clickable="true"
-              android:padding="5dp"
-              android:scaleType="center"
+              android:layout_margin="10dp"
+              android:scaleType="fitCenter"
               />
 
       </LinearLayout>
