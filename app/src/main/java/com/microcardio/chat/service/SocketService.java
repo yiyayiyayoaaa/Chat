@@ -19,6 +19,8 @@ import com.microcardio.chat.po.Message;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by AMOBBS on 2016/11/15.
@@ -32,12 +34,23 @@ public class SocketService extends Service {
     boolean bConnected = false;  //连接状态
     LocalBroadcastManager localBroadcastManager; //本地广播管理对象
     NotificationManager notificationManager;
+    Timer timer;
     Handler handler = new Handler(){
         @Override
         public void handleMessage(android.os.Message msg) {
             Thread receivedThread = new Thread(new RecvThread());
             receivedThread.start();
             Log.d(TAG, "handleMessage: " + "接收服务器信息线程开启");
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = new Message();
+                    message.setCmd(Constants.KEEP_ALIVE);
+                    SocketService.this.sendMessage(message);
+                    System.out.println(message);
+                }
+            },5000,30000);
         }
     };
     @Nullable
@@ -65,6 +78,7 @@ public class SocketService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        timer.cancel();
         disconnect(); //关闭连接
     }
 
@@ -127,6 +141,7 @@ public class SocketService extends Service {
                     String json = null;
                     if(socket.isConnected()) {
                         json = dis.readUTF();
+                       // System.out.println(json);
                     }
 //                    System.out.println("-------------count-------------"+count);
 //                    if (count <= 0){

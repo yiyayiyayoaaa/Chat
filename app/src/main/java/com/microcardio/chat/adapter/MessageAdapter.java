@@ -298,7 +298,7 @@ public class MessageAdapter extends BaseAdapter {
                     FileOutputStream fileOutputStream;
                     try {
                         fileOutputStream = new FileOutputStream(file);
-                        byte[] buffer = new byte[2048];
+                        byte[] buffer = new byte[4096];
                         int len = 0;
                         while ((len = inputStream.read(buffer)) != -1) {
                             fileOutputStream.write(buffer, 0, len);

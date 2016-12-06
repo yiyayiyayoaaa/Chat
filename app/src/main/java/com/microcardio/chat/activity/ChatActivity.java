@@ -33,7 +33,6 @@ import com.microcardio.chat.R;
 import com.microcardio.chat.adapter.MessageAdapter;
 import com.microcardio.chat.po.Constants;
 import com.microcardio.chat.po.Message;
-import com.microcardio.chat.po.Recorder;
 import com.microcardio.chat.po.User;
 import com.microcardio.chat.service.SocketService;
 import com.microcardio.chat.util.AudioRecorderButton;
@@ -240,7 +239,7 @@ public class ChatActivity extends AppCompatActivity {
         mAudioRecorderButton.setFinishRecordCallBack(new AudioRecorderButton.AudioFinishRecordCallBack() {
             @Override
             public void onFinish(float seconds, String filePath) {
-                Recorder recorder = new Recorder(filePath, seconds);
+                //Recorder recorder = new Recorder(filePath, seconds);
                 //System.out.println("recorder" + recorder);
                 String fileName = filePath.substring(filePath.lastIndexOf("/")+1);
                 StringBuffer content = new StringBuffer(Constants.FILE_PATH).append("/").append(fileName).append("?").append(seconds);

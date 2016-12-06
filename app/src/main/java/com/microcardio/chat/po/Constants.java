@@ -39,7 +39,9 @@ public interface Constants {
 	int Message_List = 22;
 	int TAKE_PHOTO = 23;
 
-	int IS_IMG = 24;
-	int IS_AUDIO = 25;
-	int IS_OTHER = 26;
+	int IS_IMG = 24; //是图片
+	int IS_AUDIO = 25; //是音频
+	int IS_OTHER = 26; //其他
+
+	int KEEP_ALIVE = 30;//保持连接
 }
