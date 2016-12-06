@@ -87,6 +87,7 @@ public class SocketService extends Service {
     public void connect() {
         try {
             socket = new Socket(Constants.SERVER_ADDRESS, Constants.SERVER_PORT);
+            socket.setTcpNoDelay(true);
             socket.setKeepAlive(true);
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
