@@ -38,4 +38,8 @@ public interface Constants {
 	int IMAGE = 21;
 	int Message_List = 22;
 	int TAKE_PHOTO = 23;
+
+	int IS_IMG = 24;
+	int IS_AUDIO = 25;
+	int IS_OTHER = 26;
 }

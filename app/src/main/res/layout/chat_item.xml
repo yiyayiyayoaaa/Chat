@@ -44,7 +44,7 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <com.microcardio.chat.util.ProgressImageView
                     android:id="@+id/iv_send_msg"
                     android:layout_weight="5"
                     android:layout_width="0dp"
@@ -101,7 +101,7 @@
                     android:layout_margin="10dp"
                     android:textColor="#000"
                     android:background="@drawable/balloon_l_pressed"/>
-                <ImageView
+                <com.microcardio.chat.util.ProgressImageView
                     android:id="@+id/iv_received_msg"
                     android:layout_weight="5"
                     android:layout_width="0dp"

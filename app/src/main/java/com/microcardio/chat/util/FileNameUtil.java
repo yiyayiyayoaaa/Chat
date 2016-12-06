@@ -41,4 +41,15 @@ public class FileNameUtil {
             return false;
         }
     }
+
+    public static int getContentType(String content){
+        String regex = "(http://"+ Constants.SERVER_ADDRESS + ":8080/upload/)(.)+(\\.amr)(.)+";
+        if(content.matches(regex)){
+            return Constants.IS_AUDIO;
+        }else if(content.startsWith(Constants.FILE_PATH) && !content.contains(".amr")){
+            return Constants.IS_IMG;
+        }else {
+            return Constants.IS_OTHER;
+        }
+    }
 }

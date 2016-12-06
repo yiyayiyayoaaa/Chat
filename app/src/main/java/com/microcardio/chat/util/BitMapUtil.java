@@ -9,8 +9,7 @@ import android.view.Display;
  * Created by AMOBBS on 2016/11/25.
  */
 public class BitMapUtil {
-    public  static Bitmap narrowImage(String path, Activity activity){
-
+    public static Bitmap narrowImage(String path, Activity activity){
         BitmapFactory.Options opts = new BitmapFactory.Options();
         //只请求图片宽高，不解析图片像素
         opts.inJustDecodeBounds = true;
@@ -19,7 +18,7 @@ public class BitMapUtil {
         //获取图片宽高
         int imageWidth = opts.outWidth;
         int imageHeight = opts.outHeight;
-        System.out.println("---path:"+path + "---height" + imageHeight + "---width" + imageWidth);
+        //System.out.println("---path:"+path + "---height" + imageHeight + "---width" + imageWidth);
         //获取屏幕宽高
         Display dp = activity.getWindowManager().getDefaultDisplay();
         int screenWidth = dp.getWidth();
@@ -37,7 +36,6 @@ public class BitMapUtil {
         else if(scaleWidth < scaleHeight && scaleHeight > 1){
             scale = scaleHeight;
         }
-
         //设置缩小比例
         opts.inSampleSize = scale;
         opts.inJustDecodeBounds = false;
