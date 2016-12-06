@@ -36,7 +36,6 @@ public class HttpUtil {
                 .writeTimeout(4000, TimeUnit.MILLISECONDS)
                 .build();
         /* 上传的file */
-       // File file1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/a.jpg");
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream") , file);
         String fileName = file.getName();
         /* form的分割线 */
@@ -56,7 +55,6 @@ public class HttpUtil {
                 msg.obj = message;
                 msg.what = 111;
                 ChatActivity.handler.sendMessage(msg);
-                //System.out.println("服务器响应");
             }
             public void onFailure(Call call, final IOException e) {
             }
