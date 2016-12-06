@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         Message message = new Message();
         message.setCmd(Constants.CMD_REGISTER);
         nickname = et_register_nickname.getText().toString();
-        System.out.println(nickname);
+        //System.out.println(nickname);
         if(portrait == 0){
             portrait = R.drawable.p1;
         }
@@ -180,7 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if("".equals(username.trim())){
                         iv_username_prompt.setImageResource(R.drawable.no);
                         validate_username = false;
-                        System.out.println("用户名为空");
+                        //System.out.println("用户名为空");
                     }else{
                         Message message = new Message();
                         message.setCmd(Constants.VALIDATE_USERNAME);
@@ -266,11 +266,11 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String json = intent.getStringExtra("json");
-            System.out.println(json);
+            //System.out.println(json);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
             Message message = gson.fromJson(json,Message.class);
             int cmd = message.getCmd();
-            System.out.println(cmd);
+            //System.out.println(cmd);
             switch (cmd){
                 case Constants.IS_EXIST:
                     handler.sendEmptyMessage(Constants.IS_EXIST);

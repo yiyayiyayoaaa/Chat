@@ -79,8 +79,9 @@ public class ChatActivity extends AppCompatActivity {
             switch (msg.what){
                 case 111:
                     sendMessageBinder.sendMessage((Message) msg.obj);
-                    messageList.add((Message) msg.obj);
-                    //new ChatActivity().sendBroadcast((Message) msg.obj);
+                    //messageList.add((Message) msg.obj);
+                    sendBroadcast((Message) msg.obj);
+
                     break;
             }
             messageAdapter.notifyDataSetChanged();
@@ -128,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //发送广播
-    public void sendBroadcast(Message message){
+    public static void sendBroadcast(Message message){
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         String json  = gson.toJson(message,Message.class);
         Intent intent = new Intent("com.microcardio.chat.MESSAGE_BROADCAST");
@@ -240,7 +241,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onFinish(float seconds, String filePath) {
                 Recorder recorder = new Recorder(filePath, seconds);
-                System.out.println("recorder" + recorder);
+                //System.out.println("recorder" + recorder);
                 String fileName = filePath.substring(filePath.lastIndexOf("/")+1);
                 StringBuffer content = new StringBuffer(Constants.FILE_PATH).append("/").append(fileName).append("?").append(seconds);
                 Message message = new Message(Constants.CMD_CHAT,content.toString(),sender,received,new Date());
@@ -260,7 +261,7 @@ public class ChatActivity extends AppCompatActivity {
                 case Constants.IMAGE: //发送图片到服务器
                     Uri uri1= data.getData();
                     String path = getRealPathFromURI(uri1);
-                    System.out.println(path);
+                    //System.out.println(path);
                     File file = new File(path);
                     String fileName = file.getName();
                     String type = fileName.substring(fileName.lastIndexOf("."));
@@ -316,7 +317,7 @@ public class ChatActivity extends AppCompatActivity {
         loginServiceConn = new LoginServiceConn();
         socketService = new Intent(this, SocketService.class);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        messageAdapter = new MessageAdapter(this,messageList,senderUsername,sendPortrait,receivedPortrait);
+        messageAdapter = new MessageAdapter(this,messageList,senderUsername,sendPortrait,receivedPortrait,lv_chatList);
         lv_chatList.setAdapter(messageAdapter);
     }
 

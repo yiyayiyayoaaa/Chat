@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         myUsername = intent.getStringExtra("myUsername");
         myNickname = intent.getStringExtra("myNickname");
         myPortrait = intent.getIntExtra("myPortrait",R.drawable.p1);
-        System.out.println(myPortrait);
+        //System.out.println(myPortrait);
         tv_myNickname.setText(myNickname);
         civ_myPortrait.setImageResource(myPortrait);
         loginMsgReceiver = new LoginMsgReceiver();
@@ -224,12 +224,14 @@ public class MainActivity extends AppCompatActivity {
                 case Constants.CMD_CHAT: //显示新消息
                     String senderName = message.getSender().getUsername();
                     String receivedName = message.getReceived().getUsername();
+                    //System.out.println("content:" + message.getContent() + "=========");
                     List<User> users = new ArrayList<>();
                     users.addAll(userList);
                     for(User user : users){
                         if(user.getUsername().equals(senderName) ||user.getUsername().equals(receivedName)){
                             if(FileNameUtil.isImage(message.getContent())){
                                 user.setNewInfo("[图片]");
+                                //System.out.println("\"[图片]\"");
                             }else if(FileNameUtil.isAudio(message.getContent())){
                                 user.setNewInfo("[语音]");
                             }else{

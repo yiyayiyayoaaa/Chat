@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
     private void readUsername(){
         SharedPreferences sp = getSharedPreferences("username",MODE_APPEND);
         Map map = sp.getAll();
-        System.out.println(map.size());
+        //System.out.println(map.size());
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_array_item,map.keySet().toArray());
         et_login_username.setAdapter(adapter);
 

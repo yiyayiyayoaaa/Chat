@@ -5,9 +5,11 @@ package com.microcardio.chat.po;
  */
 public interface Constants {
 	String SERVER_ADDRESS = "101.200.53.234";
+	//String SERVER_ADDRESS = "192.168.0.109";
 	String UPLOAD_ADDRESS = "http://"+ SERVER_ADDRESS + ":8080/upload";
 	String UPLOAD_URL = UPLOAD_ADDRESS + "/Upload";
 	String FILE_PATH = UPLOAD_ADDRESS;
+	//int SERVER_PORT = 8899;     //服务器端口号
 	int SERVER_PORT = 8888;     //服务器端口号
 	int CMD_REGISTER = 0;       //注册
 	int CMD_LOGIN = 1;          //登录

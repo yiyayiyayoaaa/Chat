@@ -16,7 +16,7 @@ public class ViewPicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_pic);
         setTitle("查看图片");
         if(getSupportActionBar() != null) {
-            System.out.println("dsadsadadsaad"+getSupportActionBar().getHeight());
+            //System.out.println("dsadsadadsaad"+getSupportActionBar().getHeight());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 

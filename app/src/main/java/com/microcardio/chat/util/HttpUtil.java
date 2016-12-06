@@ -56,7 +56,7 @@ public class HttpUtil {
                 msg.obj = message;
                 msg.what = 111;
                 ChatActivity.handler.sendMessage(msg);
-                System.out.println("服务器响应");
+                //System.out.println("服务器响应");
             }
             public void onFailure(Call call, final IOException e) {
             }
@@ -97,7 +97,7 @@ public class HttpUtil {
                 msg.obj = message;
                 msg.what = 111;
                 ChatActivity.handler.sendMessage(msg);
-                System.out.println("服务器响应");
+                //System.out.println("服务器响应");
             }
             public void onFailure(Call call, final IOException e) {
             }

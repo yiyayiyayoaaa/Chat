@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.microcardio.chat.R;
@@ -50,13 +51,14 @@ public class MessageAdapter extends BaseAdapter {
     private int mMaxWidth;
     private LayoutInflater mInflater;
     View animView;
-    public MessageAdapter(Activity activity, List<Message> messages, String senderUsername,int sendPortrait,int receivedPortrait){
+    ListView listView;
+    public MessageAdapter(Activity activity, List<Message> messages, String senderUsername,int sendPortrait,int receivedPortrait,ListView listView){
         this.activity = activity;
         this.messages = messages;
         this.senderUsername = senderUsername;
         this.sendPortrait = sendPortrait;
         this.receivedPortrait = receivedPortrait;
-
+        this.listView = listView;
         //获取屏幕的宽度
         WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -199,10 +201,11 @@ public class MessageAdapter extends BaseAdapter {
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
-        System.out.println("--------文件是否存在"+file.exists()+"-------");
+        //System.out.println("--------文件是否存在"+file.exists()+"-------");
         if(file.exists()){
             Bitmap bitmap = BitMapUtil.narrowImage(path,activity);
             imageView.setImageBitmap(bitmap);
+            listView.setSelection(messages.size()-1);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -237,6 +240,7 @@ public class MessageAdapter extends BaseAdapter {
                             public void run() {
                                 Bitmap bitmap = BitMapUtil.narrowImage(path,activity);
                                 imageView.setImageBitmap(bitmap);
+                                listView.setSelection(messages.size()-1);
                                 imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -261,14 +265,12 @@ public class MessageAdapter extends BaseAdapter {
         }
     }
 
-
-
-    //加载语音
+    //加载 发送语音
     private void downAsynAudioRight(final String url, final View frame, final View view) {
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
-        System.out.println("--------文件是否存在"+file.exists()+"-------");
+        //System.out.println("--------文件是否存在"+file.exists()+"-------");
         if(file.exists()){
             frame.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -357,12 +359,12 @@ public class MessageAdapter extends BaseAdapter {
         }
     }
 
-    //加载接收语音
+    //加载 接收语音
     private void downAsynAudioLeft(final String url, final View frame, final View view) {
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
-        System.out.println("--------文件是否存在"+file.exists()+"-------");
+       // System.out.println("--------文件是否存在"+file.exists()+"-------");
         if(file.exists()){
             frame.setOnClickListener(new View.OnClickListener() {
                 @Override
