@@ -58,7 +58,7 @@ public class ProgressImageView extends ImageView{
                 init();
             }
             // 画背景
-            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
             //mPaint.setColor(Color.parseColor("#70000000"));// 半透明
             canvas.drawRect(0, 0, getWidth(), getHeight(), mPaint);
             // 画块块

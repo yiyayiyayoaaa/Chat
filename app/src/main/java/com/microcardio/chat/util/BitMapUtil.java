@@ -9,6 +9,7 @@ import android.view.Display;
  * Created by AMOBBS on 2016/11/25.
  */
 public class BitMapUtil {
+
     public static Bitmap narrowImage(String path, Activity activity){
         BitmapFactory.Options opts = new BitmapFactory.Options();
         //只请求图片宽高，不解析图片像素
