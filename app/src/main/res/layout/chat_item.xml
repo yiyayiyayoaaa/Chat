@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textColor="#fff"
-                    android:textAlignment="center"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/balloon_r"/>
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_weight="1"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textColor="#000"
-                    android:textAlignment="center"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/balloon_l_pressed"/>
                 <com.microcardio.chat.util.ProgressImageView
                     android:id="@+id/iv_received_msg"

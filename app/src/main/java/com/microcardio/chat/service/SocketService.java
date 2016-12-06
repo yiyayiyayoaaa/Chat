@@ -102,7 +102,7 @@ public class SocketService extends Service {
         try {
             socket = new Socket(Constants.SERVER_ADDRESS, Constants.SERVER_PORT);
             socket.setTcpNoDelay(true);
-            socket.setKeepAlive(true);
+            //socket.setKeepAlive(true);
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
             Log.d(TAG, "connect: 与服务器建立连接");
