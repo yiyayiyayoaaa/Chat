@@ -21,16 +21,18 @@ public class MediaPlayerManager {
     public static void playSound(String filePath, MediaPlayer.OnCompletionListener onCompletionListener){
         if (mMediaPlayer == null){
             mMediaPlayer = new MediaPlayer();
+
             //设置一个Error监听器
             mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
                     mMediaPlayer.reset();
-                    mMediaPlayer.release();
+                    //mMediaPlayer.release();
                     return false;
                 }
             });
         }else{
+
             mMediaPlayer.reset();
             //mMediaPlayer.release();
         }
