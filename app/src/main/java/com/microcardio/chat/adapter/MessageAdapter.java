@@ -353,13 +353,14 @@ public class MessageAdapter extends BaseAdapter {
                     }
                     animView = view.findViewById(R.id.send_recorder_anim);
                     animView.setBackgroundResource(R.drawable.play_anim);
-                    AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
+                    final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
                     animation.start();
                     // 播放录音
                     MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                         public void onCompletion(MediaPlayer mp) {
                             //播放完成后修改图片
+                            animation.stop();
                             animView.setBackgroundResource(R.drawable.adj);
                         }
                     });
@@ -400,13 +401,14 @@ public class MessageAdapter extends BaseAdapter {
                                         }
                                         animView = view.findViewById(R.id.send_recorder_anim);
                                         animView.setBackgroundResource(R.drawable.play_anim);
-                                        AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
+                                        final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
                                         animation.start();
                                         // 播放录音
                                         MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                                             public void onCompletion(MediaPlayer mp) {
                                                 //播放完成后修改图片
+                                                animation.stop();
                                                 animView.setBackgroundResource(R.drawable.adj);
                                             }
                                         });
@@ -447,13 +449,14 @@ public class MessageAdapter extends BaseAdapter {
                     }
                     animView = view.findViewById(R.id.receive_recorder_anim);
                     animView.setBackgroundResource(R.drawable.play_anim2);
-                    AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
+                    final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
                     animation.start();
                     // 播放录音
                     MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                         public void onCompletion(MediaPlayer mp) {
                             //播放完成后修改图片
+                            animation.stop();
                             animView.setBackgroundResource(R.drawable.jda);
                         }
                     });
@@ -494,13 +497,14 @@ public class MessageAdapter extends BaseAdapter {
                                         }
                                         animView = view.findViewById(R.id.receive_recorder_anim);
                                         animView.setBackgroundResource(R.drawable.play_anim2);
-                                        AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
+                                        final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
                                         animation.start();
                                         // 播放录音
                                         MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                                             public void onCompletion(MediaPlayer mp) {
                                                 //播放完成后修改图片
+                                                animation.stop();
                                                 animView.setBackgroundResource(R.drawable.jda);
                                             }
                                         });
