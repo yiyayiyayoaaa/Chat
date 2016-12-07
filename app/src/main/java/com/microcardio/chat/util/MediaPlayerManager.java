@@ -18,7 +18,7 @@ public class MediaPlayerManager {
      * @description 播放声音  filePath：文件路径  onCompletionListener：播放完成监听
      * @time on 2016/11/14 13:49
      */
-    public static void playSound(String filePath,MediaPlayer.OnCompletionListener onCompletionListener){
+    public static void playSound(String filePath, MediaPlayer.OnCompletionListener onCompletionListener){
         if (mMediaPlayer == null){
             mMediaPlayer = new MediaPlayer();
             //设置一个Error监听器
@@ -26,11 +26,13 @@ public class MediaPlayerManager {
                 @Override
                 public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
                     mMediaPlayer.reset();
+                    mMediaPlayer.release();
                     return false;
                 }
             });
         }else{
             mMediaPlayer.reset();
+            //mMediaPlayer.release();
         }
         try {
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

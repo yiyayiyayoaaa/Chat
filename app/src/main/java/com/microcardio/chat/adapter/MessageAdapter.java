@@ -52,7 +52,10 @@ public class MessageAdapter extends BaseAdapter {
     //item的最大宽度
     private int mMaxWidth;
     private LayoutInflater mInflater;
-    View animView;
+    View animViewLeft;
+    View animViewRight;
+    AnimationDrawable animationLeft;
+    AnimationDrawable animationRight;
     ListView listView;
     public MessageAdapter(Activity activity, List<Message> messages, String senderUsername,int sendPortrait,int receivedPortrait,ListView listView){
         this.activity = activity;
@@ -136,9 +139,9 @@ public class MessageAdapter extends BaseAdapter {
                     ViewGroup.LayoutParams lp = viewHolder.send_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
                     //加载语音文件
-                    if(viewHolder.ll_audio_right.getTag()==null || !s[0].equals(viewHolder.ll_audio_right.getTag().toString())) {
+                    //if(viewHolder.ll_audio_right.getTag()==null || !s[0].equals(viewHolder.ll_audio_right.getTag().toString())) {
                         downAsynAudioRight(s[0],viewHolder.ll_audio_right,view);
-                    }
+                   // }
                     break;
                 case Constants.IS_OTHER:
                     viewHolder.ll_audio_right.setVisibility(View.GONE);
@@ -196,9 +199,9 @@ public class MessageAdapter extends BaseAdapter {
                     ViewGroup.LayoutParams lp = viewHolder.receive_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
                     //加载语音文件
-                    if(viewHolder.ll_audio_left.getTag()==null || !s[0].equals(viewHolder.ll_audio_left.getTag().toString())) {
+                    //if(viewHolder.ll_audio_left.getTag()==null || !s[0].equals(viewHolder.ll_audio_left.getTag().toString())) {
                         downAsynAudioLeft(s[0], viewHolder.ll_audio_left, view);
-                    }
+                   // }
                     break;
                 case Constants.IS_OTHER:
                     viewHolder.ll_audio_left.setVisibility(View.GONE);
@@ -341,38 +344,42 @@ public class MessageAdapter extends BaseAdapter {
 
     //加载 发送语音
     private void downAsynAudioRight(final String url, final View frame, final View view) {
-        frame.setTag(url);
+       // frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
         //System.out.println("--------文件是否存在"+file.exists()+"-------");
+
         if(file.exists()){
             frame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 声音播放动画
-                    if (animView != null) {
-                        animView.setBackgroundResource(R.drawable.adj);
-                        animView = null;
+                    if (animViewRight != null) {
+                        animViewRight.setBackgroundResource(R.drawable.adj);
+                        animViewRight = null;
                     }
-                    animView = view.findViewById(R.id.send_recorder_anim);
-                    animView.setBackgroundResource(R.drawable.play_anim);
-                    final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
-                    animation.start();
+                    animViewRight = view.findViewById(R.id.send_recorder_anim);
+                    animViewRight.setBackgroundResource(R.drawable.play_anim);
+                    animationRight = (AnimationDrawable) animViewRight.getBackground();
+                    animationRight.start();
+                    if(animationLeft != null){
+                        animationLeft.stop();
+                        animViewLeft.setBackgroundResource(R.drawable.jda);
+                    }
                     // 播放录音
                     MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                         public void onCompletion(MediaPlayer mp) {
                             //播放完成后修改图片
-                           // animation.stop();
-                            animView.setBackgroundResource(R.drawable.adj);
-                            animView = null;
+                            animationRight.stop();
+                            animViewRight.setBackgroundResource(R.drawable.adj);
+                            //animView = null;
                         }
                     });
                 }
             });
         }else {
-
             OkHttpClient mOkHttpClient = new OkHttpClient();
             Request request = new Request.Builder().url(url).build();
             mOkHttpClient.newCall(request).enqueue(new Callback() {
@@ -387,7 +394,7 @@ public class MessageAdapter extends BaseAdapter {
                     FileOutputStream fileOutputStream;
                     try {
                         fileOutputStream = new FileOutputStream(file);
-                        byte[] buffer = new byte[2048];
+                        byte[] buffer = new byte[4096];
                         int len = 0;
                         while ((len = inputStream.read(buffer)) != -1) {
                             fileOutputStream.write(buffer, 0, len);
@@ -400,22 +407,26 @@ public class MessageAdapter extends BaseAdapter {
                                     @Override
                                     public void onClick(View v) {
                                         // 声音播放动画
-                                        if (animView != null) {
-                                            animView.setBackgroundResource(R.drawable.adj);
-                                            animView = null;
+                                        if (animViewRight != null) {
+                                            animViewRight.setBackgroundResource(R.drawable.adj);
+                                            animViewRight = null;
                                         }
-                                        animView = view.findViewById(R.id.send_recorder_anim);
-                                        animView.setBackgroundResource(R.drawable.play_anim);
-                                        final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
-                                        animation.start();
+                                        animViewRight = view.findViewById(R.id.send_recorder_anim);
+                                        animViewRight.setBackgroundResource(R.drawable.play_anim);
+                                        animationRight = (AnimationDrawable) animViewRight.getBackground();
+                                        animationRight.start();
+                                        if(animationLeft!= null) {
+                                            animationLeft.stop();
+                                            animViewLeft.setBackgroundResource(R.drawable.jda);
+                                        }
                                         // 播放录音
                                         MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                                             public void onCompletion(MediaPlayer mp) {
                                                 //播放完成后修改图片
-                                                //animation.stop();
-                                                animView.setBackgroundResource(R.drawable.adj);
-                                                animView = null;
+                                                animationRight.stop();
+                                                animViewRight.setBackgroundResource(R.drawable.adj);
+                                                //animView = null;
                                             }
                                         });
                                     }
@@ -440,7 +451,7 @@ public class MessageAdapter extends BaseAdapter {
 
     //加载 接收语音
     private void downAsynAudioLeft(final String url, final View frame, final View view) {
-        frame.setTag(url);
+        //frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
@@ -450,28 +461,31 @@ public class MessageAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     // 声音播放动画
-                    if (animView != null) {
-                        animView.setBackgroundResource(R.drawable.jda);
-                        animView = null;
+                    if (animViewLeft != null) {
+                        animViewLeft.setBackgroundResource(R.drawable.jda);
+                        animViewLeft = null;
                     }
-                    animView = view.findViewById(R.id.receive_recorder_anim);
-                    animView.setBackgroundResource(R.drawable.play_anim2);
-                    final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
-                    animation.start();
+                    animViewLeft = view.findViewById(R.id.receive_recorder_anim);
+                    animViewLeft.setBackgroundResource(R.drawable.play_anim2);
+                    animationLeft = (AnimationDrawable) animViewLeft.getBackground();
+                    animationLeft.start();
+                    if(animationRight != null){
+                        animationRight.stop();
+                        animViewRight.setBackgroundResource(R.drawable.adj);
+                    }
                     // 播放录音
                     MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                         public void onCompletion(MediaPlayer mp) {
                             //播放完成后修改图片
-                            //animation.stop();
-                            animView.setBackgroundResource(R.drawable.jda);
-                            animView = null;
+                            animationLeft.stop();
+                            animViewLeft.setBackgroundResource(R.drawable.jda);
+                            //animView = null;
                         }
                     });
                 }
             });
         }else {
-
             OkHttpClient mOkHttpClient = new OkHttpClient();
             Request request = new Request.Builder().url(url).build();
             mOkHttpClient.newCall(request).enqueue(new Callback() {
@@ -486,7 +500,7 @@ public class MessageAdapter extends BaseAdapter {
                     FileOutputStream fileOutputStream;
                     try {
                         fileOutputStream = new FileOutputStream(file);
-                        byte[] buffer = new byte[2048];
+                        byte[] buffer = new byte[4096];
                         int len = 0;
                         while ((len = inputStream.read(buffer)) != -1) {
                             fileOutputStream.write(buffer, 0, len);
@@ -499,23 +513,29 @@ public class MessageAdapter extends BaseAdapter {
                                     @Override
                                     public void onClick(View v) {
                                         // 声音播放动画
-                                        if (animView != null) {
-                                            animView.setBackgroundResource(R.drawable.jda);
-                                            animView = null;
+                                        if (animViewLeft != null) {
+                                            animViewLeft.setBackgroundResource(R.drawable.jda);
+                                            animViewLeft = null;
                                         }
-                                        animView = view.findViewById(R.id.receive_recorder_anim);
-                                        animView.setBackgroundResource(R.drawable.play_anim2);
-                                        final AnimationDrawable animation = (AnimationDrawable) animView.getBackground();
-                                        animation.start();
+                                        animViewLeft = view.findViewById(R.id.receive_recorder_anim);
+                                        animViewLeft.setBackgroundResource(R.drawable.play_anim2);
+                                        animationLeft = (AnimationDrawable) animViewLeft.getBackground();
+                                        animationLeft.start();
+                                        if(animationRight != null){
+                                            animationRight.stop();
+                                            animViewRight.setBackgroundResource(R.drawable.adj);
+                                        }
                                         // 播放录音
                                         MediaPlayerManager.playSound(path, new MediaPlayer.OnCompletionListener() {
 
                                             public void onCompletion(MediaPlayer mp) {
                                                 //播放完成后修改图片
-                                               // animation.stop();
-                                                animView.setBackgroundResource(R.drawable.jda);
-                                                animView = null;
+                                                animationLeft.stop();
+                                                animViewLeft.setBackgroundResource(R.drawable.jda);
+                                                //animView = null;
                                             }
+
+
                                         });
                                     }
                                 });
@@ -535,6 +555,5 @@ public class MessageAdapter extends BaseAdapter {
                 }
             });
         }
-
     }
 }
