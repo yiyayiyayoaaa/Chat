@@ -136,7 +136,9 @@ public class MessageAdapter extends BaseAdapter {
                     ViewGroup.LayoutParams lp = viewHolder.send_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
                     //加载语音文件
-                    downAsynAudioRight(s[0],viewHolder.ll_audio_right,view);
+                    if(viewHolder.ll_audio_right.getTag()==null || !s[0].equals(viewHolder.ll_audio_right.getTag().toString())) {
+                        downAsynAudioRight(s[0],viewHolder.ll_audio_right,view);
+                    }
                     break;
                 case Constants.IS_OTHER:
                     viewHolder.ll_audio_right.setVisibility(View.GONE);
@@ -194,7 +196,9 @@ public class MessageAdapter extends BaseAdapter {
                     ViewGroup.LayoutParams lp = viewHolder.receive_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
                     //加载语音文件
-                    downAsynAudioLeft(s[0],viewHolder.ll_audio_left,view);
+                    if(viewHolder.ll_audio_left.getTag()==null || !s[0].equals(viewHolder.ll_audio_left.getTag().toString())) {
+                        downAsynAudioLeft(s[0], viewHolder.ll_audio_left, view);
+                    }
                     break;
                 case Constants.IS_OTHER:
                     viewHolder.ll_audio_left.setVisibility(View.GONE);
@@ -323,7 +327,6 @@ public class MessageAdapter extends BaseAdapter {
                         e.printStackTrace();
                     } finally {
                         try {
-
                             inputStream.close();
                             response.close();
                         } catch (IOException e) {
@@ -338,6 +341,7 @@ public class MessageAdapter extends BaseAdapter {
 
     //加载 发送语音
     private void downAsynAudioRight(final String url, final View frame, final View view) {
+        frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
@@ -360,8 +364,9 @@ public class MessageAdapter extends BaseAdapter {
 
                         public void onCompletion(MediaPlayer mp) {
                             //播放完成后修改图片
-                            animation.stop();
+                           // animation.stop();
                             animView.setBackgroundResource(R.drawable.adj);
+                            animView = null;
                         }
                     });
                 }
@@ -408,8 +413,9 @@ public class MessageAdapter extends BaseAdapter {
 
                                             public void onCompletion(MediaPlayer mp) {
                                                 //播放完成后修改图片
-                                                animation.stop();
+                                                //animation.stop();
                                                 animView.setBackgroundResource(R.drawable.adj);
+                                                animView = null;
                                             }
                                         });
                                     }
@@ -434,6 +440,7 @@ public class MessageAdapter extends BaseAdapter {
 
     //加载 接收语音
     private void downAsynAudioLeft(final String url, final View frame, final View view) {
+        frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
@@ -456,8 +463,9 @@ public class MessageAdapter extends BaseAdapter {
 
                         public void onCompletion(MediaPlayer mp) {
                             //播放完成后修改图片
-                            animation.stop();
+                            //animation.stop();
                             animView.setBackgroundResource(R.drawable.jda);
+                            animView = null;
                         }
                     });
                 }
@@ -504,8 +512,9 @@ public class MessageAdapter extends BaseAdapter {
 
                                             public void onCompletion(MediaPlayer mp) {
                                                 //播放完成后修改图片
-                                                animation.stop();
+                                               // animation.stop();
                                                 animView.setBackgroundResource(R.drawable.jda);
+                                                animView = null;
                                             }
                                         });
                                     }
