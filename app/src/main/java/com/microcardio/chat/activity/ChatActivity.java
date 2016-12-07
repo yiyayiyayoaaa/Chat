@@ -40,6 +40,10 @@ import com.microcardio.chat.util.FileNameUtil;
 import com.microcardio.chat.util.HttpUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -265,6 +269,12 @@ public class ChatActivity extends AppCompatActivity {
                     String fileName = file.getName();
                     String type = fileName.substring(fileName.lastIndexOf("."));
                     String newFileName = FileNameUtil.randomFileName(type);
+                    //复制文件到缓存目录
+                    try {
+                        copyFile(file,new File(getCacheDir(),newFileName));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     StringBuffer content = new StringBuffer(Constants.FILE_PATH).append("/").append(newFileName);
                     Message message = new Message(Constants.CMD_CHAT,content.toString(),sender,received,new Date());
                     HttpUtil.upFile(file,newFileName,message);
@@ -282,7 +292,23 @@ public class ChatActivity extends AppCompatActivity {
             HttpUtil.upFile(file,fileName.replace("/",""),message);
         }
     }
-
+    //复制文件
+    private static void copyFile(File source, File dest) throws IOException {
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+        try {
+            inputChannel = new FileInputStream(source).getChannel();
+            outputChannel = new FileOutputStream(dest).getChannel();
+            outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+        } finally {
+            if(inputChannel !=null) {
+                inputChannel.close();
+            }
+            if(outputChannel != null) {
+                outputChannel.close();
+            }
+        }
+    }
     //从uri中获取真实地址
     public String getRealPathFromURI(Uri contentUri) {
         String res = null;
