@@ -30,7 +30,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.microcardio.chat.R;
-import com.microcardio.chat.adapter.MessageAdapter;
+import com.microcardio.chat.adapter.MsgAdapter;
 import com.microcardio.chat.po.Constants;
 import com.microcardio.chat.po.Message;
 import com.microcardio.chat.po.User;
@@ -75,7 +75,7 @@ public class ChatActivity extends AppCompatActivity {
     LoginServiceConn loginServiceConn;
     LoginMsgReceiver loginMsgReceiver; //登录信息广播接收者对象
     static LocalBroadcastManager localBroadcastManager;
-    static MessageAdapter messageAdapter;
+    static MsgAdapter messageAdapter;
     public static Handler handler = new Handler(){
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -342,7 +342,7 @@ public class ChatActivity extends AppCompatActivity {
         loginServiceConn = new LoginServiceConn();
         socketService = new Intent(this, SocketService.class);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        messageAdapter = new MessageAdapter(this,messageList,senderUsername,sendPortrait,receivedPortrait,lv_chatList);
+        messageAdapter = new MsgAdapter(this,messageList,senderUsername,sendPortrait,receivedPortrait,lv_chatList);
         lv_chatList.setAdapter(messageAdapter);
     }
 

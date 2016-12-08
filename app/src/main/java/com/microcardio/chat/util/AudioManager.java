@@ -76,9 +76,9 @@ public class AudioManager {
             //设置MediaRecorder的音频源为麦克风
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             //设置音频格式为AAC_ADTS
-            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             //设置音频编码为ACC
-            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         //准备录音
             mMediaRecorder.prepare();
             //开始必须在prepare后调用
@@ -101,7 +101,7 @@ public class AudioManager {
      */
     private String generateFileName() {
         //随机生成不同的UUID
-        return UUID.randomUUID().toString()+".amr";
+        return UUID.randomUUID().toString()+".3gp";
     }
 
     /**

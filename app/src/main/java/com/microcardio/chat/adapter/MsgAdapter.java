@@ -8,13 +8,11 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,9 +38,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by AMOBBS on 2016/11/8.
+ * Created by AMOBBS on 2016/12/8.
  */
-public class MessageAdapter extends BaseAdapter {
+public class MsgAdapter extends BaseAdapter{
     Activity activity;
     List<Message> messages;
     String senderUsername;
@@ -52,13 +50,13 @@ public class MessageAdapter extends BaseAdapter {
     private int mMinWidth;
     //item的最大宽度
     private int mMaxWidth;
-    private LayoutInflater mInflater;
     View animViewLeft;
     View animViewRight;
     AnimationDrawable animationLeft;
     AnimationDrawable animationRight;
     ListView listView;
-    public MessageAdapter(Activity activity, List<Message> messages, String senderUsername,int sendPortrait,int receivedPortrait,ListView listView){
+
+    public MsgAdapter(Activity activity, List<Message> messages, String senderUsername,int sendPortrait,int receivedPortrait,ListView listView){
         this.activity = activity;
         this.messages = messages;
         this.senderUsername = senderUsername;
@@ -97,180 +95,109 @@ public class MessageAdapter extends BaseAdapter {
     }
 
 
-
-    public View getView1(int position, View convertView, ViewGroup parent) {
-
-        return null;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Message message = messages.get(position);
-        View view;
-        ViewHolder viewHolder;
-        if(convertView == null) {
-            view = View.inflate(activity, R.layout.chat_item, null);
-            viewHolder = new ViewHolder();
-            viewHolder.tv_send_msg = (TextView) view.findViewById(R.id.tv_send_msg);
-            viewHolder.iv_send_msg = (ProgressImageView) view.findViewById(R.id.iv_send_msg);
-            viewHolder.tv_received_msg = (TextView) view.findViewById(R.id.tv_received_msg);
-            viewHolder.iv_received_msg = (ProgressImageView) view.findViewById(R.id.iv_received_msg);
-            viewHolder.iv_send_portrait = (ImageView) view.findViewById(R.id.iv_send_portrait);
-            viewHolder.iv_received_portrait = (ImageView) view.findViewById(R.id.iv_received_portrait);
-            viewHolder.ll_left = (LinearLayout) view.findViewById(R.id.ll_left);
-            viewHolder.ll_right = (LinearLayout) view.findViewById(R.id.ll_right);
-            viewHolder.send_seconds = (TextView) view.findViewById(R.id.send_recorder_time);
-            viewHolder.received_seconds = (TextView) view.findViewById(R.id.receive_recorder_time);
-            viewHolder.send_length = view.findViewById(R.id.send_recorder_length);
-            viewHolder.receive_length = view.findViewById(R.id.receive_recorder_length);
-            viewHolder.ll_audio_right = (LinearLayout) view.findViewById(R.id.ll_audio_right);
-            viewHolder.ll_audio_left = (LinearLayout) view.findViewById(R.id.ll_audio_left);
-            view.setTag(viewHolder);
-        }else {
-            view = convertView;
-            viewHolder = (ViewHolder) view.getTag();
-        }
-        if(message.getSender().getUsername().equals(senderUsername)){
-            viewHolder.ll_right.setVisibility(View.VISIBLE);
-            viewHolder.ll_left.setVisibility(View.GONE);
-            viewHolder.iv_send_portrait.setImageResource(sendPortrait);
-            switch (FileNameUtil.getContentType(message.getContent())){
-                case Constants.IS_IMG:
-                    viewHolder.ll_audio_right.setVisibility(View.GONE);
-                    viewHolder.tv_send_msg.setVisibility(View.GONE);
-                    viewHolder.iv_send_msg.setVisibility(View.VISIBLE);
-                    if(viewHolder.iv_send_msg.getTag()==null || !message.getContent().equals(viewHolder.iv_send_msg.getTag().toString())){
-                        downAsynFile(message.getContent(), viewHolder.iv_send_msg);
-                    }
-                    break;
-                case Constants.IS_AUDIO:
-                    String[] s  = message.getContent().split("\\?");
-                    viewHolder.ll_audio_right.setVisibility(View.VISIBLE);
-                    viewHolder.tv_send_msg.setVisibility(View.GONE);
-                    viewHolder.iv_send_msg.setVisibility(View.GONE);
-                    viewHolder.send_seconds.setText(Math.round(Float.parseFloat(s[1])) + "\"");
-                    ViewGroup.LayoutParams lp = viewHolder.send_length.getLayoutParams();
-                    lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
-                    //加载语音文件
-                    //if(viewHolder.ll_audio_right.getTag()==null || !s[0].equals(viewHolder.ll_audio_right.getTag().toString())) {
-                        downAsynAudioRight(s[0],viewHolder.ll_audio_right,view);
-                   // }
-                    break;
-                case Constants.IS_OTHER:
-                    viewHolder.ll_audio_right.setVisibility(View.GONE);
-                    viewHolder.iv_send_msg.setVisibility(View.GONE);
-                    viewHolder.tv_send_msg.setVisibility(View.VISIBLE);
-                    viewHolder.tv_send_msg.setText(message.getContent());
-                    break;
-            }
-//            if(FileNameUtil.isImage(message.getContent())){//如果内容为图片
-//                viewHolder.ll_audio_right.setVisibility(View.GONE);
-//                viewHolder.tv_send_msg.setVisibility(View.GONE);
-//                viewHolder.iv_send_msg.setVisibility(View.VISIBLE);
-//                if(viewHolder.iv_send_msg.getTag()==null || !message.getContent().equals(viewHolder.iv_send_msg.getTag().toString())){
-//                    downAsynFile(message.getContent(), viewHolder.iv_send_msg);
-//                }
-//
-//            }else if(FileNameUtil.isAudio(message.getContent())){//如果内容为语音
-//                String[] s  = message.getContent().split("\\?");
-//                viewHolder.ll_audio_right.setVisibility(View.VISIBLE);
-//                viewHolder.tv_send_msg.setVisibility(View.GONE);
-//                viewHolder.iv_send_msg.setVisibility(View.GONE);
-//                viewHolder.send_seconds.setText(Math.round(Float.parseFloat(s[1])) + "\"");
-//                ViewGroup.LayoutParams lp = viewHolder.send_length.getLayoutParams();
-//                lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
-//                //加载语音文件
-//                downAsynAudioRight(s[0],viewHolder.ll_audio_right,view);
-//            }else{
-//                viewHolder.ll_audio_right.setVisibility(View.GONE);
-//                viewHolder.iv_send_msg.setVisibility(View.GONE);
-//                viewHolder.tv_send_msg.setVisibility(View.VISIBLE);
-//                viewHolder.tv_send_msg.setText(message.getContent());
-//            }
-        }else {
-            viewHolder.ll_left.setVisibility(View.VISIBLE);
-            viewHolder.ll_right.setVisibility(View.GONE);
-            viewHolder.iv_received_portrait.setImageResource(receivedPortrait);
+        switch (getItemViewType(position)){
+            case Constants.IS_IMG:
+                ImgViewHolder imgViewHolder = null;
+                if(convertView == null) {
+                    convertView = activity.getLayoutInflater().inflate(R.layout.chat_img_item, null);
+                    imgViewHolder = new ImgViewHolder();
+                    imgViewHolder.iv_received_img = (ProgressImageView) convertView.findViewById(R.id.iv_received_img);
+                    imgViewHolder.iv_send_img = (ProgressImageView) convertView.findViewById(R.id.iv_send_img);
+                    imgViewHolder.iv_received_portrait_img = (ImageView) convertView.findViewById(R.id.iv_received_portrait_img);
+                    imgViewHolder.iv_send_portrait_img = (ImageView) convertView.findViewById(R.id.iv_send_portrait_img);
+                    convertView.setTag(imgViewHolder);
+                }else{
+                    imgViewHolder = (ImgViewHolder) convertView.getTag();
+                }
 
-            switch (FileNameUtil.getContentType(message.getContent())){
-                case Constants.IS_IMG:
-                    viewHolder.ll_audio_left.setVisibility(View.GONE);
-                    viewHolder.tv_received_msg.setVisibility(View.GONE);
-                    viewHolder.iv_received_msg.setVisibility(View.VISIBLE);
-                    if(viewHolder.iv_received_msg.getTag()==null || !message.getContent().equals(viewHolder.iv_received_msg.getTag().toString())){
-                        downAsynFile(message.getContent(),viewHolder.iv_received_msg);
-                    }
-                    break;
-                case Constants.IS_AUDIO:
-                    String[] s  = message.getContent().split("\\?");
-                    viewHolder.ll_audio_left.setVisibility(View.VISIBLE);
-                    viewHolder.tv_received_msg.setVisibility(View.GONE);
-                    viewHolder.iv_received_msg.setVisibility(View.GONE);
-                    viewHolder.received_seconds.setText(Math.round(Float.parseFloat(s[1])) + "\"");
-                    ViewGroup.LayoutParams lp = viewHolder.receive_length.getLayoutParams();
+                if(message.getSender().getUsername().equals(senderUsername)){
+                    imgViewHolder.iv_send_portrait_img.setImageResource(sendPortrait);
+                    downAsynFile(message.getContent(), imgViewHolder.iv_send_img);
+                }else{
+                    imgViewHolder.iv_received_portrait_img.setImageResource(receivedPortrait);
+                    downAsynFile(message.getContent(), imgViewHolder.iv_received_img);
+                }
+                break;
+            case Constants.IS_AUDIO:
+                AudioViewHolder audioViewHolder = null;
+                if(convertView == null) {
+                    convertView = activity.getLayoutInflater().inflate(R.layout.chat_audio_item, null);
+                    audioViewHolder = new AudioViewHolder();
+                    audioViewHolder.iv_received_portrait_audio = (ImageView) convertView.findViewById(R.id.iv_received_portrait_audio);
+                    audioViewHolder.iv_send_portrait_audio = (ImageView) convertView.findViewById(R.id.iv_send_portrait_audio);
+                    audioViewHolder.send_recorder_length = convertView.findViewById(R.id.send_recorder_length);
+                    audioViewHolder.receive_recorder_length = convertView.findViewById(R.id.receive_recorder_length);
+                    audioViewHolder.send_recorder_time = (TextView) convertView.findViewById(R.id.send_recorder_time);
+                    audioViewHolder.receive_recorder_time = (TextView) convertView.findViewById(R.id.receive_recorder_time);
+                    convertView.setTag(audioViewHolder);
+                }else{
+                    audioViewHolder = (AudioViewHolder) convertView.getTag();
+                }
+                String[] s  = message.getContent().split("\\?");
+                if(message.getSender().getUsername().equals(senderUsername)){
+                    //String[] s  = message.getContent().split("\\?");
+                    audioViewHolder.iv_send_portrait_audio.setImageResource(sendPortrait);
+                    ViewGroup.LayoutParams lp = audioViewHolder.send_recorder_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
-                    //加载语音文件
-                    //if(viewHolder.ll_audio_left.getTag()==null || !s[0].equals(viewHolder.ll_audio_left.getTag().toString())) {
-                        downAsynAudioLeft(s[0], viewHolder.ll_audio_left, view);
-                   // }
-                    break;
-                case Constants.IS_OTHER:
-                    viewHolder.ll_audio_left.setVisibility(View.GONE);
-                    viewHolder.iv_received_msg.setVisibility(View.GONE);
-                    viewHolder.tv_received_msg.setVisibility(View.VISIBLE);
-                    viewHolder.tv_received_msg.setText(message.getContent());
-                    break;
-            }
-//            if(FileNameUtil.isImage(message.getContent())){
-//                viewHolder.ll_audio_left.setVisibility(View.GONE);
-//                viewHolder.tv_received_msg.setVisibility(View.GONE);
-//                viewHolder.iv_received_msg.setVisibility(View.VISIBLE);
-//                if(viewHolder.iv_received_msg.getTag()==null || !message.getContent().equals(viewHolder.iv_received_msg.getTag().toString())){
-//                    downAsynFile(message.getContent(),viewHolder.iv_received_msg);
-//                }
-//            }else if(FileNameUtil.isAudio(message.getContent())){
-//                String[] s  = message.getContent().split("\\?");
-//                viewHolder.ll_audio_left.setVisibility(View.VISIBLE);
-//                viewHolder.tv_received_msg.setVisibility(View.GONE);
-//                viewHolder.iv_received_msg.setVisibility(View.GONE);
-//                viewHolder.received_seconds.setText(Math.round(Float.parseFloat(s[1])) + "\"");
-//                ViewGroup.LayoutParams lp = viewHolder.receive_length.getLayoutParams();
-//                lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
-//
-//                //加载语音文件
-//                downAsynAudioLeft(s[0],viewHolder.ll_audio_left,view);
-//            }else{
-//                viewHolder.ll_audio_left.setVisibility(View.GONE);
-//                viewHolder.iv_received_msg.setVisibility(View.GONE);
-//                viewHolder.tv_received_msg.setVisibility(View.VISIBLE);
-//                viewHolder.tv_received_msg.setText(message.getContent());
-//            }
+                    audioViewHolder.send_recorder_time.setText(Math.round(Float.parseFloat(s[1])) + "\\*");
+                    downAsynAudioRight(s[0],audioViewHolder.send_recorder_length,convertView);
+                }else{
+                    audioViewHolder.iv_received_portrait_audio.setImageResource(receivedPortrait);
+                    audioViewHolder.receive_recorder_length.getLayoutParams().width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
+                    audioViewHolder.receive_recorder_time.setText(Math.round(Float.parseFloat(s[1])) + "\\*");
+                    downAsynAudioRight(s[0],audioViewHolder.receive_recorder_length,convertView);
+                }
+                break;
+            case Constants.IS_OTHER:
+                TextViewHolder textViewHolder = null;
+                if(convertView == null) {
+                    convertView = activity.getLayoutInflater().inflate(R.layout.chat_text_item, null);
+                    textViewHolder = new TextViewHolder();
+                    textViewHolder.tv_send_msg = (TextView) convertView.findViewById(R.id.tv_send_msg);
+                    textViewHolder.tv_received_msg = (TextView) convertView.findViewById(R.id.tv_received_msg);
+                    textViewHolder.iv_received_portrait = (ImageView) convertView.findViewById(R.id.iv_received_portrait);
+                    textViewHolder.iv_send_portrait = (ImageView) convertView.findViewById(R.id.iv_send_portrait);
+                    convertView.setTag(textViewHolder);
+                }else{
+                    textViewHolder = (TextViewHolder) convertView.getTag();
+                }
+                if(message.getSender().getUsername().equals(senderUsername)){
+                    textViewHolder.iv_send_portrait.setImageResource(sendPortrait);
+                    textViewHolder.tv_send_msg.setText(message.getContent());
+                }else{
+                    textViewHolder.iv_received_portrait.setImageResource(sendPortrait);
+                    textViewHolder.tv_received_msg.setText(message.getContent());
+                }
+                break;
         }
-        return view;
+        return convertView;
     }
 
-
-    class ViewHolder{
-        TextView tv_send_msg;
-        TextView tv_received_msg;
-        ProgressImageView iv_send_msg;
-        ProgressImageView iv_received_msg;
+    class ImgViewHolder{
+        ImageView iv_send_portrait_img;
+        ImageView iv_received_portrait_img;
+        ProgressImageView iv_send_img;
+        ProgressImageView iv_received_img;
+    }
+    class TextViewHolder{
         ImageView iv_send_portrait;
         ImageView iv_received_portrait;
-        LinearLayout ll_left;
-        LinearLayout ll_right;
-        LinearLayout ll_audio_left;
-        LinearLayout ll_audio_right;
-
-        // 显示时间
-        TextView send_seconds;
-        TextView received_seconds;
-        //控件Item显示的长度
-        View send_length;
-        View receive_length;
-
-
+        TextView tv_send_msg;
+        TextView tv_received_msg;
     }
+    class AudioViewHolder{
+        View send_recorder_length;
+        View receive_recorder_length;
+        ImageView iv_send_portrait_audio;
+        ImageView iv_received_portrait_audio;
+        TextView send_recorder_time;
+        TextView receive_recorder_time;
+    }
+
+
 
     //进入查看图片界面
     public void viewPic(String path){
@@ -355,7 +282,7 @@ public class MessageAdapter extends BaseAdapter {
 
     //加载 发送语音
     private void downAsynAudioRight(final String url, final View frame, final View view) {
-       // frame.setTag(url);
+        // frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
@@ -466,7 +393,7 @@ public class MessageAdapter extends BaseAdapter {
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
-       // System.out.println("--------文件是否存在"+file.exists()+"-------");
+        // System.out.println("--------文件是否存在"+file.exists()+"-------");
         Log.d("MessageAdapter", path);
         if(file.exists()){
             Log.d("MessageAdapter", "onClick: 本地");
