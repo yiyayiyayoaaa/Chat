@@ -408,12 +408,8 @@ public class ChatActivity extends AppCompatActivity {
     public boolean isThisChat(Message message){
         String s_username = message.getSender().getUsername();
         String r_username = message.getReceived().getUsername();
-        if( (s_username.equals(senderUsername) && r_username.equals(receivedUsername)) || (s_username.equals(receivedUsername) && r_username.equals(senderUsername))){
-            return true;
-        }else {
-            return false;
-        }
-
+        return ((s_username.equals(senderUsername) && r_username.equals(receivedUsername))
+                || (s_username.equals(receivedUsername) && r_username.equals(senderUsername)));
     }
 
 }
