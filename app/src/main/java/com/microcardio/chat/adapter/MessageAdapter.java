@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -456,10 +457,13 @@ public class MessageAdapter extends BaseAdapter {
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
        // System.out.println("--------文件是否存在"+file.exists()+"-------");
+        Log.d("MessageAdapter", path);
         if(file.exists()){
+            Log.d("MessageAdapter", "onClick: 本地");
             frame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("MessageAdapter", "onClick: 语音播放1");
                     // 声音播放动画
                     if (animViewLeft != null) {
                         animViewLeft.setBackgroundResource(R.drawable.jda);
@@ -512,7 +516,9 @@ public class MessageAdapter extends BaseAdapter {
                                 frame.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        Log.d("MessageAdapter", "onClick: 语音播放2"+file.exists());
                                         // 声音播放动画
+                                        file.setReadable(true,false);
                                         if (animViewLeft != null) {
                                             animViewLeft.setBackgroundResource(R.drawable.jda);
                                             animViewLeft = null;

@@ -395,13 +395,25 @@ public class ChatActivity extends AppCompatActivity {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
             Message message = gson.fromJson(json,Message.class);
             int cmd = message.getCmd();
-            if(cmd == Constants.USER_CHAT || cmd == Constants.CMD_CHAT || cmd == Constants.CMD_CHAT_IMG){
-                messageList.add(message);
-                handler.sendEmptyMessage(1);
+            if(cmd == Constants.USER_CHAT || cmd == Constants.CMD_CHAT){
+                if (isThisChat(message) ) {
+                    messageList.add(message);
+                    handler.sendEmptyMessage(1);
+                }
             }
         }
     }
 
+    //是否是当前聊天
+    public boolean isThisChat(Message message){
+        String s_username = message.getSender().getUsername();
+        String r_username = message.getReceived().getUsername();
+        if( (s_username.equals(senderUsername) && r_username.equals(receivedUsername)) || (s_username.equals(receivedUsername) && r_username.equals(senderUsername))){
+            return true;
+        }else {
+            return false;
+        }
 
+    }
 
 }

@@ -21,27 +21,36 @@ public class MediaPlayerManager {
     public static void playSound(String filePath, MediaPlayer.OnCompletionListener onCompletionListener){
         if (mMediaPlayer == null){
             mMediaPlayer = new MediaPlayer();
-
             //设置一个Error监听器
             mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
                     mMediaPlayer.reset();
-                    //mMediaPlayer.release();
+                   // mMediaPlayer.release();
+                    //release();
                     return false;
                 }
             });
         }else{
-
+            //mMediaPlayer.stop();
             mMediaPlayer.reset();
-            //mMediaPlayer.release();
+           // mMediaPlayer.release();
         }
         try {
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setOnCompletionListener(onCompletionListener);
+            //FileInputStream fis = new FileInputStream(new File(filePath));
             mMediaPlayer.setDataSource(filePath);
-            mMediaPlayer.prepare();
-            mMediaPlayer.start();
+           // mMediaPlayer.setDataSource(fis.getFD());
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.start();
+                }
+
+            });
+            mMediaPlayer.prepareAsync();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
