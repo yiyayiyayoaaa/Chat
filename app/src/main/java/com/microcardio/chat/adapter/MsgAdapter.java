@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.microcardio.chat.R;
 import com.microcardio.chat.activity.ViewPicActivity;
-import com.microcardio.chat.po.Constants;
 import com.microcardio.chat.po.Message;
+import com.microcardio.chat.po.MsgType;
 import com.microcardio.chat.util.BitMapUtil;
 import com.microcardio.chat.util.FileNameUtil;
 import com.microcardio.chat.util.MediaPlayerManager;
@@ -96,10 +96,15 @@ public class MsgAdapter extends BaseAdapter{
 
 
     @Override
+    public int getViewTypeCount() {
+        return 3;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Message message = messages.get(position);
         switch (getItemViewType(position)){
-            case Constants.IS_IMG:
+            case MsgType.IS_IMG:
                 ImgViewHolder imgViewHolder = null;
                 if(convertView == null) {
                     convertView = activity.getLayoutInflater().inflate(R.layout.chat_img_item, null);
@@ -108,20 +113,31 @@ public class MsgAdapter extends BaseAdapter{
                     imgViewHolder.iv_send_img = (ProgressImageView) convertView.findViewById(R.id.iv_send_img);
                     imgViewHolder.iv_received_portrait_img = (ImageView) convertView.findViewById(R.id.iv_received_portrait_img);
                     imgViewHolder.iv_send_portrait_img = (ImageView) convertView.findViewById(R.id.iv_send_portrait_img);
+                    imgViewHolder.left = convertView.findViewById(R.id.ll_img_left);
+                    imgViewHolder.right = convertView.findViewById(R.id.ll_img_right);
                     convertView.setTag(imgViewHolder);
                 }else{
                     imgViewHolder = (ImgViewHolder) convertView.getTag();
                 }
 
                 if(message.getSender().getUsername().equals(senderUsername)){
+                    imgViewHolder.left.setVisibility(View.GONE);
+                    imgViewHolder.right.setVisibility(View.VISIBLE);
                     imgViewHolder.iv_send_portrait_img.setImageResource(sendPortrait);
-                    downAsynFile(message.getContent(), imgViewHolder.iv_send_img);
+                    if(imgViewHolder.iv_send_img.getTag() == null || !imgViewHolder.iv_send_img.getTag().toString().equals(message.getContent())) {
+                        downAsynFile(message.getContent(), imgViewHolder.iv_send_img);
+                    }
                 }else{
+                    imgViewHolder.left.setVisibility(View.VISIBLE);
+                    imgViewHolder.right.setVisibility(View.GONE);
                     imgViewHolder.iv_received_portrait_img.setImageResource(receivedPortrait);
-                    downAsynFile(message.getContent(), imgViewHolder.iv_received_img);
+                    if(imgViewHolder.iv_received_img.getTag() == null || !imgViewHolder.iv_received_img.getTag().toString().equals(message.getContent())) {
+                        downAsynFile(message.getContent(), imgViewHolder.iv_received_img);
+                    }
+
                 }
                 break;
-            case Constants.IS_AUDIO:
+            case MsgType.IS_AUDIO:
                 AudioViewHolder audioViewHolder = null;
                 if(convertView == null) {
                     convertView = activity.getLayoutInflater().inflate(R.layout.chat_audio_item, null);
@@ -132,26 +148,32 @@ public class MsgAdapter extends BaseAdapter{
                     audioViewHolder.receive_recorder_length = convertView.findViewById(R.id.receive_recorder_length);
                     audioViewHolder.send_recorder_time = (TextView) convertView.findViewById(R.id.send_recorder_time);
                     audioViewHolder.receive_recorder_time = (TextView) convertView.findViewById(R.id.receive_recorder_time);
+                    audioViewHolder.left = convertView.findViewById(R.id.ll_left_audio);
+                    audioViewHolder.right = convertView.findViewById(R.id.ll_right_audio);
                     convertView.setTag(audioViewHolder);
                 }else{
                     audioViewHolder = (AudioViewHolder) convertView.getTag();
                 }
                 String[] s  = message.getContent().split("\\?");
                 if(message.getSender().getUsername().equals(senderUsername)){
+                    audioViewHolder.left.setVisibility(View.GONE);
+                    audioViewHolder.right.setVisibility(View.VISIBLE);
                     //String[] s  = message.getContent().split("\\?");
                     audioViewHolder.iv_send_portrait_audio.setImageResource(sendPortrait);
                     ViewGroup.LayoutParams lp = audioViewHolder.send_recorder_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
-                    audioViewHolder.send_recorder_time.setText(Math.round(Float.parseFloat(s[1])) + "\\*");
+                    audioViewHolder.send_recorder_time.setText( "'"+Math.round(Float.parseFloat(s[1])));
                     downAsynAudioRight(s[0],audioViewHolder.send_recorder_length,convertView);
                 }else{
+                    audioViewHolder.left.setVisibility(View.VISIBLE);
+                    audioViewHolder.right.setVisibility(View.GONE);
                     audioViewHolder.iv_received_portrait_audio.setImageResource(receivedPortrait);
                     audioViewHolder.receive_recorder_length.getLayoutParams().width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
-                    audioViewHolder.receive_recorder_time.setText(Math.round(Float.parseFloat(s[1])) + "\\*");
-                    downAsynAudioRight(s[0],audioViewHolder.receive_recorder_length,convertView);
+                    audioViewHolder.receive_recorder_time.setText(Math.round(Float.parseFloat(s[1])) + "'");
+                    downAsynAudioLeft(s[0],audioViewHolder.receive_recorder_length,convertView);
                 }
                 break;
-            case Constants.IS_OTHER:
+            case MsgType.IS_OTHER:
                 TextViewHolder textViewHolder = null;
                 if(convertView == null) {
                     convertView = activity.getLayoutInflater().inflate(R.layout.chat_text_item, null);
@@ -160,15 +182,21 @@ public class MsgAdapter extends BaseAdapter{
                     textViewHolder.tv_received_msg = (TextView) convertView.findViewById(R.id.tv_received_msg);
                     textViewHolder.iv_received_portrait = (ImageView) convertView.findViewById(R.id.iv_received_portrait);
                     textViewHolder.iv_send_portrait = (ImageView) convertView.findViewById(R.id.iv_send_portrait);
+                    textViewHolder.left = convertView.findViewById(R.id.ll_left_text);
+                    textViewHolder.right = convertView.findViewById(R.id.ll_right_text);
                     convertView.setTag(textViewHolder);
                 }else{
                     textViewHolder = (TextViewHolder) convertView.getTag();
                 }
                 if(message.getSender().getUsername().equals(senderUsername)){
+                    textViewHolder.left.setVisibility(View.GONE);
+                    textViewHolder.right.setVisibility(View.VISIBLE);
                     textViewHolder.iv_send_portrait.setImageResource(sendPortrait);
                     textViewHolder.tv_send_msg.setText(message.getContent());
                 }else{
-                    textViewHolder.iv_received_portrait.setImageResource(sendPortrait);
+                    textViewHolder.left.setVisibility(View.VISIBLE);
+                    textViewHolder.right.setVisibility(View.GONE);
+                    textViewHolder.iv_received_portrait.setImageResource(receivedPortrait);
                     textViewHolder.tv_received_msg.setText(message.getContent());
                 }
                 break;
@@ -181,12 +209,17 @@ public class MsgAdapter extends BaseAdapter{
         ImageView iv_received_portrait_img;
         ProgressImageView iv_send_img;
         ProgressImageView iv_received_img;
+        View left;
+        View right;
+
     }
     class TextViewHolder{
         ImageView iv_send_portrait;
         ImageView iv_received_portrait;
         TextView tv_send_msg;
         TextView tv_received_msg;
+        View left;
+        View right;
     }
     class AudioViewHolder{
         View send_recorder_length;
@@ -195,6 +228,8 @@ public class MsgAdapter extends BaseAdapter{
         ImageView iv_received_portrait_audio;
         TextView send_recorder_time;
         TextView receive_recorder_time;
+        View left;
+        View right;
     }
 
 
@@ -499,4 +534,6 @@ public class MsgAdapter extends BaseAdapter{
             });
         }
     }
+
+
 }

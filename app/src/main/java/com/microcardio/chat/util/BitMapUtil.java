@@ -9,8 +9,12 @@ import android.view.Display;
  * Created by AMOBBS on 2016/11/25.
  */
 public class BitMapUtil {
+    public static LruCacheUtil lruCacheUtil = LruCacheUtil.getInstance();
 
     public static Bitmap narrowImage(String path, Activity activity){
+        if(lruCacheUtil.getBitmapFromMemory(path) != null){
+            return lruCacheUtil.getBitmapFromMemory(path);
+        }
         BitmapFactory.Options opts = new BitmapFactory.Options();
         //只请求图片宽高，不解析图片像素
         opts.inJustDecodeBounds = true;
@@ -41,7 +45,11 @@ public class BitMapUtil {
         opts.inSampleSize = scale;
         opts.inJustDecodeBounds = false;
         //获取缩小后的图片的像素信息
-        return BitmapFactory.decodeFile(path, opts);
+        Bitmap bitmap = BitmapFactory.decodeFile(path, opts);
+        if(bitmap != null) {
+            lruCacheUtil.addBitmapToMemory(path, bitmap);
+        }
+        return bitmap;
 
     }
 
