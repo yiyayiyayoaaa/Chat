@@ -18,7 +18,7 @@ public class LruCacheUtil {
 
     private LruCacheUtil() {
         //内存缓存  
-        mMemoryCache=new LruCache<String, Bitmap>(MEMO_CACHE_SIZE){
+        mMemoryCache=new LruCache<String, Bitmap>(MEMO_CACHE_SIZE / 8){
             protected int sizeOf(String key, Bitmap bitmap) {
                 return bitmap.getByteCount()/1024;
             };

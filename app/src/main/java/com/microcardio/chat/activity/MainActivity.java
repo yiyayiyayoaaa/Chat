@@ -30,6 +30,7 @@ import com.microcardio.chat.R;
 import com.microcardio.chat.adapter.UserListAdapter;
 import com.microcardio.chat.po.Constants;
 import com.microcardio.chat.po.Message;
+import com.microcardio.chat.po.MsgType;
 import com.microcardio.chat.po.User;
 import com.microcardio.chat.service.SocketService;
 import com.microcardio.chat.util.DateUtil;
@@ -229,13 +230,17 @@ public class MainActivity extends AppCompatActivity {
                     users.addAll(userList);
                     for(User user : users){
                         if(user.getUsername().equals(senderName) ||user.getUsername().equals(receivedName)){
-                            if(FileNameUtil.isImage(message.getContent())){
-                                user.setNewInfo("[图片]");
-                                //System.out.println("\"[图片]\"");
-                            }else if(FileNameUtil.isAudio(message.getContent())){
-                                user.setNewInfo("[语音]");
-                            }else{
-                                user.setNewInfo(message.getContent());
+                           int type =  FileNameUtil.getContentType(message.getContent());
+                            switch (type){
+                                case MsgType.IS_IMG:
+                                    user.setNewInfo("[图片]");
+                                    break;
+                                case MsgType.IS_AUDIO:
+                                    user.setNewInfo("[语音]");
+                                    break;
+                                default:
+                                    user.setNewInfo(message.getContent());
+                                    break;
                             }
                             user.setNewDate(DateUtil.parseStr(message.getSendDate()));
                             userList.remove(user);

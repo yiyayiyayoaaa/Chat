@@ -87,7 +87,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     break;
             }
-            messageAdapter.notifyDataSetChanged();
+            messageAdapter.notifyDataSetChanged(messageList.size()-1);
             lv_chatList.setSelection(messageAdapter.getCount() -1);
         }
     };

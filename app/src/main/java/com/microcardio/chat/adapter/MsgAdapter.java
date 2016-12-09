@@ -163,14 +163,19 @@ public class MsgAdapter extends BaseAdapter{
                     ViewGroup.LayoutParams lp = audioViewHolder.send_recorder_length.getLayoutParams();
                     lp.width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
                     audioViewHolder.send_recorder_time.setText( "'"+Math.round(Float.parseFloat(s[1])));
-                    downAsynAudioRight(s[0],audioViewHolder.send_recorder_length,convertView);
+                    if(audioViewHolder.send_recorder_length.getTag() == null || !audioViewHolder.send_recorder_length.getTag().toString().equals(s[0])) {
+                        downAsynAudioRight(s[0], audioViewHolder.send_recorder_length, convertView);
+                    }
                 }else{
                     audioViewHolder.left.setVisibility(View.VISIBLE);
                     audioViewHolder.right.setVisibility(View.GONE);
                     audioViewHolder.iv_received_portrait_audio.setImageResource(receivedPortrait);
                     audioViewHolder.receive_recorder_length.getLayoutParams().width = (int) (mMinWidth + (mMaxWidth / 60f) * (Float.parseFloat(s[1])));
                     audioViewHolder.receive_recorder_time.setText(Math.round(Float.parseFloat(s[1])) + "'");
-                    downAsynAudioLeft(s[0],audioViewHolder.receive_recorder_length,convertView);
+                    if(audioViewHolder.receive_recorder_length.getTag() == null || !audioViewHolder.receive_recorder_length.getTag().toString().equals(s[0])) {
+                        downAsynAudioLeft(s[0],audioViewHolder.receive_recorder_length,convertView);
+                    }
+
                 }
                 break;
             case MsgType.IS_OTHER:
@@ -317,7 +322,7 @@ public class MsgAdapter extends BaseAdapter{
 
     //加载 发送语音
     private void downAsynAudioRight(final String url, final View frame, final View view) {
-        // frame.setTag(url);
+        frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
@@ -424,7 +429,7 @@ public class MsgAdapter extends BaseAdapter{
 
     //加载 接收语音
     private void downAsynAudioLeft(final String url, final View frame, final View view) {
-        //frame.setTag(url);
+        frame.setTag(url);
         final String filename = url.substring(url.lastIndexOf("/"));
         final File file = new File(activity.getCacheDir(),filename);
         final String path = file.getAbsolutePath();
@@ -535,5 +540,17 @@ public class MsgAdapter extends BaseAdapter{
         }
     }
 
+
+    public void notifyDataSetChanged(int itemIndex) {
+        //得到第一个可显示控件的位置，
+        int visiblePosition = listView.getFirstVisiblePosition();
+        //只有当要更新的view在可见的位置时才更新，不可见时，跳过不更新
+        if (itemIndex - visiblePosition >= 0) {
+            //得到要更新的item的view
+            View view = listView.getChildAt(itemIndex - visiblePosition);
+            //调用adapter更新界面
+            getView(itemIndex,view,listView);
+        }
+    }
 
 }
