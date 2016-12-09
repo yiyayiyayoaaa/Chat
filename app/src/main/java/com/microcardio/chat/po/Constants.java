@@ -4,8 +4,8 @@ package com.microcardio.chat.po;
  *   常量
  */
 public interface Constants {
-	//String SERVER_ADDRESS = "101.200.53.234";
-	String SERVER_ADDRESS = "192.168.0.114";
+	String SERVER_ADDRESS = "101.200.53.234";
+	//String SERVER_ADDRESS = "192.168.0.114";
 	String UPLOAD_ADDRESS = "http://"+ SERVER_ADDRESS + ":8080/upload";
 	String UPLOAD_URL = UPLOAD_ADDRESS + "/Upload";
 	String FILE_PATH = UPLOAD_ADDRESS;
