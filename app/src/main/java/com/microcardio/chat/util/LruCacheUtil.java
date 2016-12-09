@@ -8,7 +8,7 @@ import android.support.v4.util.LruCache;
  */
 public class LruCacheUtil {
     //单例  
-    private static LruCacheUtil lruCacheUtil;
+    private static LruCacheUtil lruCacheUtil = new LruCacheUtil();
 
     //内存缓存大小  
     private final int MEMO_CACHE_SIZE=((int)(Runtime.getRuntime().maxMemory()/1024));
@@ -30,9 +30,6 @@ public class LruCacheUtil {
      * @return
      */
     public static LruCacheUtil getInstance() {
-        if(lruCacheUtil==null){
-            lruCacheUtil=new LruCacheUtil();
-        }
         return lruCacheUtil;
     }
 
@@ -41,7 +38,7 @@ public class LruCacheUtil {
      * @param key
      * @param bitmap
      */
-    public void addBitmapToMemory(String key,Bitmap bitmap){
+    public  void addBitmapToMemory(String key,Bitmap bitmap){
         if(getBitmapFromMemory(key)==null){
            // System.out.println("dsadsdsadsdsadsadadsadsadsadad" + mMemoryCache);
            // System.out.println(key+"----"+bitmap);
@@ -53,7 +50,7 @@ public class LruCacheUtil {
      * @param key
      * @return
      */
-    public Bitmap getBitmapFromMemory(String key){
+    public  Bitmap getBitmapFromMemory(String key){
         return mMemoryCache.get(key);
     }
 }

@@ -296,13 +296,12 @@ public class MsgAdapter extends BaseAdapter{
                                 Bitmap bitmap = BitMapUtil.narrowImage(path,activity);
                                 imageView.setImageBitmap(bitmap);
                                 imageView.stopProgress();
-
+                                listView.setSelection(messages.size()-1);
                                 listView.setOnScrollListener(new AbsListView.OnScrollListener() {
                                     @Override
                                     public void onScrollStateChanged(AbsListView view, int scrollState) {
                                         switch (scrollState){
                                             case SCROLL_STATE_IDLE:
-                                                listView.setSelection(messages.size()-1);
                                                 break;
                                             case SCROLL_STATE_TOUCH_SCROLL:
                                                 break;

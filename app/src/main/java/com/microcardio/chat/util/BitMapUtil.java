@@ -9,8 +9,7 @@ import android.view.Display;
  * Created by AMOBBS on 2016/11/25.
  */
 public class BitMapUtil {
-    public static LruCacheUtil lruCacheUtil = LruCacheUtil.getInstance();
-
+    private static LruCacheUtil lruCacheUtil = LruCacheUtil.getInstance();
     public static Bitmap narrowImage(String path, Activity activity){
         if(lruCacheUtil.getBitmapFromMemory(path) != null){
             return lruCacheUtil.getBitmapFromMemory(path);
