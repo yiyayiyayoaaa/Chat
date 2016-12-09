@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -238,7 +239,7 @@ public class MsgAdapter extends BaseAdapter{
     }
 
 
-
+    private static final String TAG = "MsgAdapter";
     //进入查看图片界面
     public void viewPic(String path){
         Intent toView = new Intent(activity, ViewPicActivity.class);
@@ -295,7 +296,26 @@ public class MsgAdapter extends BaseAdapter{
                                 Bitmap bitmap = BitMapUtil.narrowImage(path,activity);
                                 imageView.setImageBitmap(bitmap);
                                 imageView.stopProgress();
-                                listView.setSelection(messages.size()-1);
+
+                                listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                    @Override
+                                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+                                        switch (scrollState){
+                                            case SCROLL_STATE_IDLE:
+                                                listView.setSelection(messages.size()-1);
+                                                break;
+                                            case SCROLL_STATE_TOUCH_SCROLL:
+                                                break;
+                                            case SCROLL_STATE_FLING:
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                                    }
+                                });
                                 imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {

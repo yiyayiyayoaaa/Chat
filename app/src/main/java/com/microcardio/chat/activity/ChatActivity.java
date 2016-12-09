@@ -323,6 +323,8 @@ public class ChatActivity extends AppCompatActivity {
         }
         return res;
     }
+
+    private static final String TAG = "ChatActivity";
     //初始化数据
     private void initData(){
         Intent intent = getIntent();
@@ -344,6 +346,7 @@ public class ChatActivity extends AppCompatActivity {
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         messageAdapter = new MsgAdapter(this,messageList,senderUsername,sendPortrait,receivedPortrait,lv_chatList);
         lv_chatList.setAdapter(messageAdapter);
+
     }
 
     //加载聊天记录
