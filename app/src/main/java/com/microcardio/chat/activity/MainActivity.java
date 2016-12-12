@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("receivedPortrait",portrait);
             Notification notification = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.ic_warning_blue_a400_24dp)
-                    .setLargeIcon(BitmapFactory.decodeResource(res,myPortrait))
+                    .setLargeIcon(BitmapFactory.decodeResource(res,portrait))
                     .setTicker("有新的消息")
                     .setWhen(System.currentTimeMillis())
                     .setContentTitle(nickname+"发来的消息")
